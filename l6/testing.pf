@@ -1,0 +1,63 @@
+Goal trivial_top_t : True =
+	TopI
+
+Goal trivial_disjil_t : A ⇒ (A \/ B) =
+	ImplI ([A : DisjIL ( Ax (A), B )])
+
+Goal trivial_disjir_t : B ⇒ (A \/ B) =
+	ImplI ([B : DisjIR ( A, Ax (B) )])
+
+Goal trivial_impli_t : A ⇒ A =
+ 	ImplI ([A : Ax (A)])
+
+Goal trivial_bote_t : ⊥ ⇒ A =
+	ImplI ([⊥: BotE (A)])
+
+Goal trivial_conjel_t : A /\ B => A =
+	ImplI ([A /\ B : ConjEL (Ax (A /\ B)) ])	
+
+Goal trivial_conjer_t : A /\ B => B =
+	ImplI ([A /\ B : ConjER (Ax (A /\ B)) ])	
+
+Goal trivial_disje_t : (A \/ A) => A =
+	ImplI ([A \/ A : 
+		DisjE (Ax (A \/ A), 
+				[A : Ax (A)], [A : Ax (A)] )
+		])
+
+Goal trivial_imple_t : (P /\ (P => Q)) => Q =
+	ImplI ([ (P /\ (P => Q)) :
+		ImplE ( 
+			ConjEL (Ax (P /\ (P => Q)) )
+			,
+			ConjER (Ax (P /\ (P => Q)))
+			 ) 
+	])
+
+Goal modus_ponens_t : A ∧ (A ⇒ B) ⇒ B =
+	ImplI ([A ∧ (A ⇒ B) :
+		ImplE (ConjEL (Ax (A ∧ (A ⇒ B))),
+			ConjER (Ax (A ∧ (A ⇒ B))))])
+
+Goal modus_ponens_s : A /\ (A => B) => B =
+  [A /\ (A => B) :
+   A;
+   A => B;
+   B];
+  A /\ (A => B) => B
+
+
+Goal wrong_imple_t : (P /\ (P => Q)) => Q =
+	ImplI ([ (P /\ (P => Q)) :
+		ImplE ( 
+			ConjEL (Ax (P /\ (P => Q)) )
+			,
+			ConjER (Ax (P /\ (P => R)))
+			 ) 
+	])
+
+Goal wrong_disje_t : (A \/ A) => A =
+	ImplI ([A \/ A : 
+		DisjE (Ax (A \/ A), 
+				[B : Ax (A)], [A : Ax (A)] )
+		])
